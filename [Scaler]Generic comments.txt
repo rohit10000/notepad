@@ -1,0 +1,18 @@
+Hi, there is the logical mistake in the code, give me some more time to debug through the code, will respond after sometime in the chat, will add the code correction to the code section of request.
+
+Your approach is correct but there are some changes to be done in your code, I have updated the corrections in the code section of this request, please refer to that, it should work.
+
+There is logical issue in the code, i have updated the corrections in the code section of this request, please refer to that, it will work.
+
+There seems some major changes in the logic, could you please create google meet link and share it here,thanks.
+
+There is logical issue in the code, i have shared your debugged code on slack, please refer to that, it will work.
+
+Could you please share the google meet link in here,
+it would save both of us time.
+
+I can send you the debugged code for your reference.
+Could you please ping me on slack, mine is rohit singh with avatar as "f".
+
+In case of any issue please ask.
+Please mark as resolved when done, thanks.

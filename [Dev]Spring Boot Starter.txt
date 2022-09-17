@@ -1,0 +1,7 @@
+https://medium.com/javarevisited/top-10-courses-to-learn-spring-boot-in-2020-best-of-lot-6ffce88a1b6e
+
+Java 8 -> reflection property
+Java 9 -> reactive streams api
+
+Spring 5 -> reactive programming
+

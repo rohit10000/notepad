@@ -1,0 +1,11 @@
+Java Regex
+The Java Regex or Regular Expression is an API to define a pattern for searching or manipulating strings.
+Java Regex API provides 1 interface and 3 classes in java.util.regex package.
+	- MatchResult interface
+	- Matcher class
+	- Pattern class
+	- PatternSyntaxException class
+	
+Matcher class
+		- implements the MatchResult interface.
+		- is a regex engine which is used to perform match operations on a character sequence.

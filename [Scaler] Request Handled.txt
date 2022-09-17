@@ -1,0 +1,102 @@
+COUNT OF PRIMES
+You have to return the count, you don't have to print the solution, in here, i have added the corrections in the code section.
+
+BMI CALCULATOR
+Your approach was correct, but just few corrections need to be handledled, you have to change the print to printf ouptuting valud till oneth decimal place.
+
+
+SUM OF EVEN INDICES
+The indices are from 0index based, from (0 to 2) we have 1 2 and 3 values where at the oth value we have 1 and 2th value we have 3 which togethere form the sum of 4.
+
+PREFIX SUM - II
+You know that the prefix sum calculation is dependent on to the previout prefix + current value, could you think of finding the value from the previous and current prefix.
+
+LONGEST COMMON PREFIX
+You approach looks correct, but the thing is that we have array so why to copy all the string to array list, any how i have updated the correction and shared you debugged code on the slack please refer to the same.
+
+GENERATE ALL PARENTHESES II
+you have not allocated memory to the array, i have made few corrections into your solution which you can see in the code section of this problem and also you have to trucate the output array to size i using copyOf function of arrays.
+
+PICK FROM BOTH SIDES!
+In here you have to make use of prefix sum, and the suffixsum array, you can either take elements from the front or from the back, suppose if you are taking the element no. i from front which means you have to take arr the elements from 0 to i inclusive, like wise for right elements.
+Definately you have to use the variation of the window approach,
+A hint is here like suppose you chose the i first elements then you have to chose B-i element s from the back(i.e. right) of the array.
+Try thinking of the solution, in this way.
+
+MULTIPLE LEFT ROTATIONS OF THE ARRAY
+Your  approach is correct but there are some changes to be done in your code, I have updated the corrections in the code section of this request, please refer to that, it should work.
+
+COIN SUM INFINITE
+First things first, you have to do this in O(B) space.
+A simple approach that you can take is to take:
+-> consider every coinValue and then  try computing for the sum from 1 to B, using that coinValue.
+-> update the global dp array of size B i.e. sum
+-> Eg. if you have the coinValue of K and you are taking it then dp[i] = dp[i] + dp[i-coinValue].
+
+SPECIAL INDEX
+here in this problem, you can use the four reference array for the input.
+Lets say: leftOdd, rightOdd, leftEven and rightEven. Then, you have to precompute these arrays and then just you have to do a single iteration to delete the current index element and check for leftodd + righteven should be equal to lefteven + rightOdd.
+
+ATH LARGEST ELEMENT
+A simple solution that you can use here is that:
+-> create a minHeap; and then you have to maintain the size of the min heap to A.
+-> at every iteration you have to add the current value to the heap and then check for the condition at if current index i.e i less than A-1 add -1 to result,
+else if i == A-1 add the top of the heap to result otherwise( means when greater) pop the top and add the next top to the result.
+
+CHECK FOR BST WITH ONE CHILD
+Your approach is wrong as it fails for the test case: [ 49, 44, 42, 25, 2 ].
+A simple approach you can this of is:
+-> add the root node i.e first value; here the range for the further values is (-inf to +inf) -{current}
+-> then for the next node, if it not in the range then return "NO".
+else, there will be two possibilities:
+		- the node has value greater than the parent; then consider the value and the new range for the further values will be from (parents upper range limit, parent) - {current}
+		- the node has value lesser than the parent; then consider the value and then update the new range as (parent's lower range limit, parent) - {current}.
+-> likewise do for all the nodes.
+-> at the end return "Yes".
+
+DESIGN LINKED LIST
+In here, you have misunderstood the problem statement.
+In case of the add at front, insert at last element and delete of the query is of no use, but you have taken that as position.
+
+SUBARRAY WITH LEAST AVERAGE
+In here, return the index of the first element of the subarray of size k that has least average. Array indexing starts from 0.
+There is the logical mistake in the code, give me some more time to debug through the code, will respond after sometime in the chat, will add the code correction to the code section of request.
+
+COMMON ELEMENTS
+It makes no sense if you will use set in here as because in case of the repeated elements the set stores the unique elements.
+Could you try thinking of and solution using hashMap and storing the count of the one element and then checking for the other array elements and updating the ans result array.
+
+IS MAGIC?
+A simple solution you can use here is that:
+-> find out the sum of digit of N
+-> if that becomes single digit number check if it is 1 return 1 else return 0.
+-> otherwise update N to sum of digits of the N as above, do the steps until get the single digit sum.
+
+LENGTH OF LONGEST CONSECUTIVE ONES
+A simple solution that you can use.
+-> check if all of then are 1 then return n;
+-> iterate for A: lets say from 0 to n-1
+if current is 0 then check the consecutive ones to its left and to its right, the current possible answer will be left+right+1 if there is an extra one other than left and right consecutive otherwise left+right, update the ans.
+-> return ans.
+
+COUNTING THE NODES
+Here, in this problem you have to check with all the ancesters so in order to consider the current node you have to have the maximum value of all the ancestors, 
+so in your recursive fuction you will also have to pass the maximum value of all the ancestor, and check the condition.
+
+
+BATCHES
+In here, this problem is the variation of the connected nodes in an undirected graph, you can use dfs to solve this.
+
+LINKED-LIST
+Approach: instead of simply inserting the element from the list, you have to check for the position, if the positiion is head of the number of elements in the list you have to ignore.
+For example if the number of elements in the list is 4 and the position comes out to be 6, you have to ignore.
+
+DIVIDE INTEGERS
+Here you have to use bitwise operator, instead of just subtracting you even have to check for the shifting condition... could you please create a google meet, I might be explain to clearly over there, it would save both of us time.
+
+
+COUNT INCREASING TRIPLETS
+Looking to the constraints we can find that this problem can be done in O(n^2) time.
+So consider every element than find the number of elements to its left that are less than current and find the number of elements that are greater than current to its right, then add left_count*right_count to the ans.
+And similarly do this for all the array values: 1 to n-2.
+

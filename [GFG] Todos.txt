@@ -1,0 +1,5 @@
+https://www.geeksforgeeks.org/count-derangements-permutation-such-that-no-element-appears-in-its-original-position/
+https://www.geeksforgeeks.org/coin-game-winner-every-player-three-choices/
+https://www.geeksforgeeks.org/longest-alternating-subsequence/
+https://www.geeksforgeeks.org/optimal-binary-search-tree-dp-24/
+https://www.geeksforgeeks.org/palindrome-partitioning-dp-17/

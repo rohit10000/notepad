@@ -1,0 +1,660 @@
+0 - 1 Knapsack Problem
+class Solution 
+{ 
+    static int knapSack(int W, int wt[], int val[], int n) 
+    { 
+         int dp[][] = new int[n+1][W+1];
+         int output = 0;
+         
+         for (int i=1; i<=n; i++) {
+             int ivalue = val[i-1];
+             int jweight = wt[i-1];
+             
+             for (int j=0; j<=W; j++) {
+                 if (j<jweight)
+                    dp[i][j] = dp[i-1][j];
+                 else
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-jweight] + ivalue);
+                    
+                output = Math.max(output, dp[i][j]);
+             }
+             
+         }
+         
+         return output;
+    } 
+}
+
+Coin Change
+class Solution {
+    public long count(int coins[], int N, int sum) {
+        int n = coins.length;
+        
+        long dp[] = new long[sum+1];
+        dp[0] = 1;
+        
+        for (int i=0; i<n; i++) {
+            int coinValue = coins[i];
+            
+            for (int j=coinValue; j<=sum; j++)
+                dp[j] += dp[j-coinValue];
+            
+        }
+        
+        return dp[sum];
+    }
+}
+
+Nth catalan number
+class Solution
+{
+    public static BigInteger findCatalan(int n)
+    {
+        BigInteger catalan[] = new BigInteger[n+1];
+        catalan[0] = catalan[1] = BigInteger.valueOf(1);
+        
+        for (int i=2; i<=n; i++) {
+            BigInteger cat = new BigInteger("0");
+            for (int j=0; j<i; j++)
+                cat = cat.add(catalan[j].multiply(catalan[i-j-1]));
+            
+            catalan[i] = cat;
+        }
+        
+        return catalan[n];
+    }
+}
+
+Matrix Chain Multiplication
+class Solution{
+    
+    static int matrixMulUtil(int i, int j, int arr[], int dp[][]) {
+        if (i+1 == j)
+            return 0;
+            
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+        int ret = Integer.MAX_VALUE;
+        for (int k=i+1; k<j; k++) {
+            
+            int curr = matrixMulUtil(i, k, arr, dp) + matrixMulUtil(k, j, arr, dp) + arr[i]*arr[k]*arr[j];
+            ret = Math.min(ret, curr);
+            
+        }
+        
+        return dp[i][j] = ret;
+    }
+    
+    static int matrixMultiplication(int N, int arr[])
+    {
+        int dp[][] = new int[101][101];
+        
+        for (int i=0; i<101; i++)
+            Arrays.fill(dp[i], -1);
+            
+        return matrixMulUtil(0, N-1, arr, dp);
+    }
+}
+
+Edit Distance
+class Solution {
+    private int editDistanceUtil(String s, String t, int i, int j, int dp[][]) {
+        if (i < 0 || j < 0)
+            return i+j + 2;
+        
+        if (dp[i][j] != 0)
+            return dp[i][j];
+            
+        int ivalue = s.charAt(i);
+        int jvalue = t.charAt(j);
+        
+        int curr;
+        
+        if (ivalue == jvalue)
+            curr = editDistanceUtil(s, t, i-1, j-1, dp);
+        else {
+            curr = 1 + editDistanceUtil(s, t, i-1, j, dp);
+            curr = Math.min(curr, 1 + editDistanceUtil(s, t, i, j-1, dp));
+            curr = Math.min(curr, 1 + editDistanceUtil(s, t, i-1, j-1, dp));
+        }
+        
+        return dp[i][j] = curr;
+    }
+    
+    public int editDistance(String s, String t) {
+
+        int n = s.length();
+        int m = t.length();
+        
+        int dp[][] = new int[n][m];
+        
+        return editDistanceUtil(s, t, n-1, m-1, dp);
+    }
+}
+
+Partition Equal Subset Sum
+class Solution{
+    static boolean partitionPosibleUtil(int arr[], int N, int sum, boolean dp[][]) {
+        for (int i=1; i<=N; i++) {
+            int ivalue = arr[i-1];
+            
+            for (int j=0; j<=sum; j++) {
+                dp[i][j] = dp[i-1][j];
+                
+                if(j >= ivalue)
+                    dp[i][j] |= dp[i-1][j-ivalue];
+            }
+        }
+        
+        return dp[N][sum/2];
+    }
+    
+    static int equalPartition(int N, int arr[]) {
+        
+        int sum = 0;
+        for (int i=0; i<N; i++)
+            sum += arr[i];
+        
+        if (sum%2 == 1)
+            return 0;
+        
+        boolean dp[][] = new boolean[N+1][sum+1];
+        dp[0][0] = true;
+        
+        boolean flag = partitionPosibleUtil(arr, N, sum, dp);
+        if (flag)
+            return 1;
+        else
+            return 0;
+    }
+}
+
+Gold Mine Problem
+class Solution{
+    static int maxGold(int n, int m, int M[][])
+    {
+        for (int j=m-2; j>=0; j--) {
+            for (int i=0; i<n; i++) {
+                int curr = 0;
+                
+                if (i+1 < n)
+                    curr = Math.max(curr, M[i+1][j+1]);
+                
+                if (i-1 >= 0)
+                    curr = Math.max(curr, M[i-1][j+1]);
+                
+                curr = Math.max(curr, M[i][j+1]);
+                
+                M[i][j] += curr;
+            }
+        }
+        
+        int ans = 0;
+        for (int i=0; i<n; i++)
+            ans = Math.max(ans, M[i][0]);
+            
+        return ans;
+    }
+}
+
+Longest Increasing Subsequence
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        
+        int n = nums.length;
+        int a[] = new int[n];
+
+        int k = 0;
+        a[k] = nums[0];
+        
+        for (int i=1; i<n; i++) {
+            int ivalue = nums[i];
+            int aLast = a[k];
+            
+            if (ivalue > aLast)
+                a[++k] = ivalue;
+            else {
+                int low = 0, high = k;
+                while (low <= high) {
+                    int mid = (low + high)/2;
+                    int midValue = a[mid];
+                    
+                    if(midValue < ivalue)
+                        low = mid+1;
+                    else
+                        high = mid-1;
+                }
+                
+                a[low] = ivalue;
+            }
+        }
+        
+        return k+1;
+    }
+}
+
+Maximize The Cut Segments
+class Solution
+{
+    public int maximizeCuts(int n, int x, int y, int z)
+    {
+       int dp[] = new int[n+1];
+       Arrays.fill(dp, -1);
+       dp[0] = 0;
+       
+       int nums[] = {x, y, z};
+       
+       for (int i=0; i<3; i++) {
+           
+           int ivalue = nums[i];
+           
+           for (int j=ivalue; j<=n; j++) {
+                if (dp[j-ivalue] != -1)
+                    dp[j] = Math.max(dp[j], dp[j-ivalue]+1);
+           }
+       }
+       
+       return dp[n] == -1 ? 0 : dp[n];
+    }
+}
+
+Egg Dropping Puzzle
+class Solution 
+{
+    static int eggDropUtil(int n, int k, int dp[][]) {
+        if (n == 1 || k == 1 || k == 0)
+            return k;
+        
+        if (dp[n][k] != -1)
+            return dp[n][k];
+        
+        int ret = Integer.MAX_VALUE;
+        for (int i=1; i<=k; i++) {
+            int case1 = eggDropUtil(n-1, i-1, dp);
+            int case2 = eggDropUtil(n, k-i, dp);
+            
+            ret = Math.min(ret, Math.max(case1, case2));
+        }
+        
+        return dp[n][k] = ret + 1;
+    }
+    
+    static int eggDrop(int n, int k) 
+	{
+        int dp[][] = new int[n+1][k+1];
+        for (int i=0; i<=n; i++)
+            Arrays.fill(dp[i], -1);
+            
+        return eggDropUtil(n, k, dp);
+	}
+}
+
+Max length chain
+class CompareBySecond implements Comparator<Pair>
+{
+   public int compare(Pair a, Pair b)
+    {
+        return a.y - b.y;
+    }
+}
+
+class GfG
+{
+    int maxChainLength(Pair arr[], int n)
+    {
+       Arrays.sort(arr, new CompareBySecond());
+       
+       int ans = 0;
+       int prev = Integer.MIN_VALUE;
+       
+       for (int i=0; i<n; i++) {
+           Pair ipair = arr[i];
+           
+           if (ipair.x > prev) {
+               ans++;
+               prev = ipair.y;
+           }
+       }
+       
+       return ans;
+    }
+}
+
+Largest square formed in a matrix
+class Solution{
+    static int maxSquare(int n, int m, int mat[][]){
+        
+        int aux[][] = new int[n+1][m+1];
+        int ans = 0;
+        
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=m; j++) {
+                
+                int curr = mat[i-1][j-1];
+                if (curr == 1)
+                    aux[i][j] = 1 + Math.min(aux[i-1][j-1], Math.min(aux[i-1][j], aux[i][j-1]));
+                else
+                    aux[i][j] = 0;
+                
+                ans = Math.max(ans, aux[i][j]);
+            }
+        }
+        
+        return ans;
+    }
+}
+
+Maximum difference of zeros and ones in binary string
+class Solution {
+    int maxSubstring(String S) {
+        int n = S.length();
+        
+        int ans = Integer.MIN_VALUE;
+        int curr = 0;
+        
+        for (int i=0; i<n; i++) {
+            
+            int ivalue = S.charAt(i);
+            
+            if (ivalue == '1')
+                curr--;
+            else
+                curr++;
+                
+            ans = Math.max(ans, curr);
+            
+            if (curr < 0)
+                curr = 0;
+        }
+        
+        return ans;
+    }
+}
+
+Array Removals
+class Solution {
+    int removeUtil(int arr[], int low, int high, int target) {
+        while (low <= high) {
+            int mid = (low + high) >> 1;
+            int midValue = arr[mid];
+            
+            if (midValue <= target)
+                low = mid + 1;
+            else
+                high = mid - 1;
+        }
+        
+        return high;
+    }
+    
+    int removals(int[] arr, int n, int k) {
+        
+        Arrays.sort(arr);
+        int ans = n;
+        
+        for (int i=0; i<n; i++) {
+            int ivalue = arr[i];
+            
+            int j = removeUtil(arr, i+1, n-1, k+ivalue);
+            
+            ans = Math.min(ans, n-(j-i+1));    
+        }
+        
+        return ans;
+    }
+}
+
+Longest Common Substring
+class Solution{
+    int[][] dp = new int[1001][1001];
+    
+    int lcs(String s1, String s2, int n, int m) {
+        
+        int ans = 0;
+        
+        for (int i=1; i<=n; i++) {
+            for (int j=1; j<=m; j++) {
+			
+                int s1Index = i-1;
+                int s2Index = j-1;
+                
+                if (s1.charAt(s1Index) == s2.charAt(s2Index))
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                
+                ans = Math.max(ans, dp[i][j]);        
+            }
+        }
+        
+        return ans;
+    }
+    
+    int longestCommonSubstr(String S1, String S2, int n, int m){
+        for (int[] row: dp)
+            Arrays.fill(row, 0);
+        
+        return lcs(S1, S2, n, m);
+    }
+}
+
+Count Balanced Binary Trees of Height h
+class Solution {
+    static long countBT(int h){
+        long dp[] = new long[h+1];
+        dp[1] = 1;
+        dp[2] = 3;
+        
+        for (int i=3; i<=h; i++) {
+            
+            dp[i] = dp[i-1]*dp[i-2] + dp[i-1]*dp[i-1] + dp[i-2]*dp[i-1];
+            
+            dp[i] %= (int)1e9+7;
+        }
+        
+        return dp[h];
+    }
+}
+
+Smallest sum contiguous subarray
+class Solution
+{
+    static int smallestSumSubarray(int a[], int n)
+    {
+        int ans = 0;
+        int curr = 0;
+        int minimum = Integer.MAX_VALUE;
+        
+        for (int i=0; i<n; i++) {
+            int ivalue = a[i];
+            curr += ivalue;
+            
+            ans = Math.min(ans, curr);
+            if (curr > 0)
+                curr = 0;
+                
+            minimum = Math.min(minimum, ivalue);
+        }
+        
+        if (ans == 0)
+            return minimum;
+
+        return ans;
+        
+    }
+}
+
+Unbounded Knapsack (Repetition of items allowed)
+class Solution{
+    static int knapSack(int N, int W, int val[], int wt[])
+    {
+        int dp[] = new int[W+1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        dp[0] = 0;
+        
+        int ans = 0;
+        
+        for (int i=0; i<N; i++) {
+            int ivalue = val[i];
+            int iweight = wt[i];
+            
+            for (int j=iweight; j<=W; j++) {
+                if (dp[j-iweight] == Integer.MIN_VALUE)
+                    continue;
+                dp[j] = Math.max(dp[j], ivalue + dp[j-iweight]);
+                
+                ans = Math.max(ans, dp[j]);
+            }
+            
+            
+        }
+        
+        return ans;
+    }
+}
+
+Longest Palindromic Subsequence
+class Solution
+{
+    private int dp[][];
+    
+    public int longestPalinSubseqUtil(String S, int i, int j) {
+        if (i == j)
+            return 1;
+        
+        if (dp[i][j] != -1)
+            return dp[i][j];
+        
+        int ivalue = S.charAt(i);
+        int jvalue = S.charAt(j);
+        
+        if (ivalue != jvalue)
+            dp[i][j] = Math.max(longestPalinSubseqUtil(S, i+1, j), longestPalinSubseqUtil(S, i, j-1));
+        else if(i+1 == j)
+            dp[i][j] = 2;
+        else
+            dp[i][j] = 2 + longestPalinSubseqUtil(S, i+1, j-1);
+        
+        return dp[i][j];
+    }
+    
+    public int longestPalinSubseq(String S)
+    {
+        int n = S.length();
+        
+        dp = new int[n+1][n+1];
+        for (int i=0; i<=n; i++)
+            Arrays.fill(dp[i], -1);
+        
+        return longestPalinSubseqUtil(S, 0, n-1);
+    }
+}
+
+Word Break
+class Sol
+{
+    private static Set<String> hs = new HashSet<String>();
+    private static Map<String, Boolean> dp = new HashMap<>();
+    
+    private static boolean wordBreakUtil(String A) {
+        if (hs.contains(A))
+            return true;
+
+        if (dp.containsKey(A))
+            return dp.get(A);
+            
+        int n = A.length();
+        boolean flag = false;
+        
+        for (int i=0; i<n; i++) {
+            String part1 = A.substring(0, i+1);
+            String part2 = A.substring(i+1);
+            
+            if (hs.contains(part1)) {
+                boolean curr = wordBreakUtil(part2);
+                dp.put(part2, curr);
+                
+                flag |= curr;
+            }
+        }
+        
+        return flag;
+    }
+    
+    public static int wordBreak(String A, ArrayList<String> B )
+    {
+        hs.clear();
+        dp.clear();
+        for (String word: B)
+            hs.add(word);
+        
+        boolean flag = wordBreakUtil(A);
+        if (flag)
+            return 1;
+        return 0;
+    }
+}
+
+Optimal Strategy For A Game
+class solve
+{
+    static long optimalStategy(int arr[], int i, int j, long dp[][]) {
+        if (i == j)
+            return arr[i];
+            
+        if(i+1 == j)
+            return Math.max(arr[i], arr[j]);
+        
+        if (dp[i][j] != -1)
+            return dp[i][j];
+        
+        long case1 = arr[i] + Math.min(optimalStategy(arr, i+2, j, dp), optimalStategy(arr, i+1, j-1, dp));
+        long case2 = arr[j] + Math.min(optimalStategy(arr, i, j-2, dp), optimalStategy(arr, i+1, j-1, dp));
+        
+        return dp[i][j] = Math.max(case1, case2);
+    }
+    
+    static long countMaximum(int arr[], int n)
+    {
+        long dp[][] = new long[n+1][n+1];
+        for (int i=0; i<=n; i++)
+            Arrays.fill(dp[i], -1);
+            
+        return optimalStategy(arr, 0, n-1, dp);
+    }
+}
+
+Word Wrap
+class Solution {
+public:
+    int dp[501][2001];
+    
+    int recur(vector<int>& arr, int i, int rem, int k) {
+        int n = arr.size();
+        
+        if (n == i)
+            return 0;
+        
+        if(dp[i][rem] != -1)
+            return dp[i][rem];
+            
+        int choice1, choice2;
+        choice1 = choice2 = INT_MAX;
+        if (rem > arr[i])
+            choice1 = recur(arr, i+1, rem-arr[i]-1, k);
+        else if (rem == arr[i])
+            choice1 = recur(arr, i+1, rem-arr[i], k);
+        
+        choice2 = recur(arr, i+1, k-arr[i]-1, k) + (rem+1)*(rem+1);
+                
+        
+        dp[i][rem] = min(choice1, choice2);
+        return dp[i][rem];
+    }
+    
+    int solveWordWrap(vector<int>nums, int k) 
+    { 
+        memset(dp, -1, sizeof(dp));
+        return recur(nums, 0, k, k);
+    }
+    
+};
